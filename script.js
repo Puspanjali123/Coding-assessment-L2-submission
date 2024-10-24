@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let cartData = [];
 
-  // Fetch data from API
   fetch(apiURL)
     .then((response) => response.json())
     .then((data) => {
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.error("Error fetching cart data:", error));
 
-  // Function to display cart items below the header
   function displayCartItems(cartItems) {
     cartItemsContainer.innerHTML = "";
     cartItems.forEach((item) => {
@@ -40,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cartItemsContainer.innerHTML += itemHTML;
     });
 
-    // Add event listeners for quantity changes and item removal
     document.querySelectorAll(".item-quantity").forEach((input) => {
       input.addEventListener("change", updateQuantity);
     });
@@ -49,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Function to update item quantity
   function updateQuantity(event) {
     const input = event.target;
     const itemId = input.closest(".cart-item").dataset.id;
@@ -64,23 +60,18 @@ document.addEventListener("DOMContentLoaded", () => {
     calculateTotals();
   }
 
-  // Function to remove item
   function removeItem(event) {
     const button = event.target;
-    const cartItem = button.closest(".cart-item"); // Target the closest cart-item div
+    const cartItem = button.closest(".cart-item");
     const itemId = cartItem.dataset.id;
 
-    // Remove the item from cartData array
     cartData = cartData.filter((item) => item.id !== itemId);
 
-    // Remove the cart-item from the DOM
     cartItem.remove();
 
-    // Recalculate totals
     calculateTotals();
   }
 
-  // Function to calculate subtotal and total
   function calculateTotals() {
     let subtotal = 0;
     cartData.forEach((item) => {
@@ -91,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
     totalElement.textContent = `₹${subtotal.toFixed(2)}`;
   }
 
-  // Checkout button functionality
   document.getElementById("checkout-btn").addEventListener("click", () => {
     alert("Proceeding to checkout...");
   });
